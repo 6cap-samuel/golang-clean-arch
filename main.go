@@ -8,6 +8,7 @@ import (
 	"golang-clean-arch/exceptions"
 	"golang-clean-arch/repositories/mongo"
 	"golang-clean-arch/usecases"
+	"os"
 )
 
 func main() {
@@ -30,6 +31,8 @@ func main() {
 	// Setup Routing
 	postController.Route(app)
 
-	err := app.Listen("0.0.0.0:8080")
+	port := os.Getenv("PORT")
+	err := app.Listen("0.0.0.0:" + port)
+
 	exceptions.PanicIfNeeded(err)
 }
