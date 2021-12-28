@@ -30,6 +30,6 @@ func main() {
 	// Setup Routing
 	postController.Route(app)
 
-	err := app.Listen(":3000")
+	err := app.Listen("0.0.0.0:80")
 	exceptions.PanicIfNeeded(err)
 }
