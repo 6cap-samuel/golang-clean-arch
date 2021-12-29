@@ -39,6 +39,7 @@ func (controller *PostController) Create(c *fiber.Ctx) error {
 	return c.JSON(entities.WebResponse{
 		Code:   200,
 		Status: "OK",
+		Data:   request.Id,
 	})
 }
 
