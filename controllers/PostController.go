@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
-	"golang-clean-arch/entities"
+	"golang-clean-arch/controllers/mappers"
+	"golang-clean-arch/controllers/requests"
+	"golang-clean-arch/controllers/responses"
 	"golang-clean-arch/exceptions"
 	"golang-clean-arch/usecases/in"
 )
@@ -29,25 +30,25 @@ func (controller *PostController) Route(app *fiber.App) {
 }
 
 func (controller *PostController) Create(c *fiber.Ctx) error {
-	var request entities.Post
+	var request requests.CreatePostRequest
 	err := c.BodyParser(&request)
-	request.Id = uuid.New().String()
+	var storeEntity = mappers.CreatePostRequestToPostMapper(request)
 
 	exceptions.PanicIfNeeded(err)
 
-	controller.create.Create(request)
-	return c.JSON(entities.WebResponse{
+	controller.create.Create(*storeEntity)
+	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   request.Id,
+		Data:   storeEntity.Id,
 	})
 }
 
 func (controller *PostController) List(c *fiber.Ctx) error {
-	responses := controller.retrieve.GetAll()
-	return c.JSON(entities.WebResponse{
+	result := controller.retrieve.GetAll()
+	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   responses,
+		Data:   result,
 	})
 }

@@ -32,9 +32,11 @@ func (p postRepository) GetAll() (response []entities.Post) {
 
 	for _, document := range documents {
 		response = append(response, entities.Post{
-			Id:    document["_id"].(string),
-			Title: document["title"].(string),
-			Body:  document["body"].(string),
+			Id:          document["_id"].(string),
+			Description: document["description"].(string),
+			Store: entities.Store{
+				Id: document["store"].(string),
+			},
 		})
 	}
 	return response
@@ -45,9 +47,10 @@ func (p postRepository) Create(post entities.Post) {
 	defer cancel()
 
 	_, err := p.Collection.InsertOne(ctx, bson.M{
-		"_id":   post.Id,
-		"title": post.Title,
-		"body":  post.Body,
+		"_id":         post.Id,
+		"description": post.Description,
+		"store":       post.Store.Id,
 	})
+
 	exceptions.PanicIfNeeded(err)
 }

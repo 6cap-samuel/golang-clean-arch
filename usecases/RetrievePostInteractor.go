@@ -1,24 +1,36 @@
 package usecases
 
 import (
+	"fmt"
 	"golang-clean-arch/entities"
 	"golang-clean-arch/usecases/in"
 	"golang-clean-arch/usecases/out"
 )
 
-// init concrete class
 type retrievePostInput struct {
-	source out.PostDataSource
+	postDataSoruce  out.PostDataSource
+	storeDataSource out.StoreDataSource
 }
 
 func NewRetrievePostInteractor(
-	source *out.PostDataSource,
+	postDataSoruce *out.PostDataSource,
+	storeDataSource *out.StoreDataSource,
 ) in.RetrievePostsInput {
 	return &retrievePostInput{
-		*source,
+		*postDataSoruce,
+		*storeDataSource,
 	}
 }
 
 func (r *retrievePostInput) GetAll() (response []entities.Post) {
-	return r.source.GetAll()
+	var posts = r.postDataSoruce.GetAll()
+	var resultList = make([]entities.Post, len(posts)-1)
+
+	for _, item := range posts {
+		item.Store = r.storeDataSource.GetStore(item.Store.Id)
+		fmt.Println(item)
+		resultList = append(resultList, item)
+	}
+
+	return resultList
 }

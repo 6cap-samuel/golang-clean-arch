@@ -1,4 +1,4 @@
-package entities
+package responses
 
 type WebResponse struct {
 	Code   int         `json:"code"`

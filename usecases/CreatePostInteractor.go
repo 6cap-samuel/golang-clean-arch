@@ -6,19 +6,22 @@ import (
 	"golang-clean-arch/usecases/out"
 )
 
-// init concrete class
 type createPostInput struct {
-	source out.PostDataSource
+	postDataSource  out.PostDataSource
+	storeDataSource out.StoreDataSource
 }
 
 func NewCreatePostInput(
-	source *out.PostDataSource,
+	post *out.PostDataSource,
+	store *out.StoreDataSource,
 ) in.CreatePostInput {
 	return &createPostInput{
-		*source,
+		*post,
+		*store,
 	}
 }
 
 func (c *createPostInput) Create(post entities.Post) {
-	c.source.Create(post)
+	c.storeDataSource.Create(post.Store)
+	c.postDataSource.Create(post)
 }
