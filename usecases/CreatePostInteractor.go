@@ -7,21 +7,17 @@ import (
 )
 
 type createPostInput struct {
-	postDataSource  out.PostDataSource
-	storeDataSource out.StoreDataSource
+	postDataSource out.PostDataSource
 }
 
 func NewCreatePostInput(
 	post *out.PostDataSource,
-	store *out.StoreDataSource,
 ) in.CreatePostInput {
 	return &createPostInput{
 		*post,
-		*store,
 	}
 }
 
 func (c *createPostInput) Create(post entities.Post) {
-	c.storeDataSource.Create(post.Store)
 	c.postDataSource.Create(post)
 }

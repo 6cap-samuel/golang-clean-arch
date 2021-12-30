@@ -1,10 +1,10 @@
 package entities
 
 type Store struct {
-	Id       string  `bson:"_id"`
-	Name     string  `bson:"name"`
-	Image    string  `bson:"image"`
-	Location string  `bson:"location"`
-	Lat      float32 `bson:"lat"`
-	Long     float32 `bson:"long"`
+	Id       string  `json:"id" bson:"_id"`
+	Name     string  `json:"name" bson:"name"`
+	Image    string  `json:"image_url" bson:"image_url"`
+	Location string  `json:"location" bson:"location"`
+	Lat      float32 `json:"lat" bson:"lat"`
+	Long     float32 `json:"long" bson:"long"`
 }

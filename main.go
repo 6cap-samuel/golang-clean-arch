@@ -17,10 +17,9 @@ func main() {
 	database := configurations.NewMongoDatabase(configuration)
 
 	postRepository := mongo.NewPostRepository(database)
-	storeRepository := mongo.NewStoreRepository(database)
 
-	retrievePost := usecases.NewRetrievePostInteractor(&postRepository, &storeRepository)
-	createPost := usecases.NewCreatePostInput(&postRepository, &storeRepository)
+	retrievePost := usecases.NewRetrievePostInteractor(&postRepository)
+	createPost := usecases.NewCreatePostInput(&postRepository)
 
 	postController := controllers.NewPostController(
 		&retrievePost,

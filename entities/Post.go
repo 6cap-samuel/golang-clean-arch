@@ -1,7 +1,7 @@
 package entities
 
 type Post struct {
-	Id          string
-	Description string
-	Store       Store
+	Id          string `json:"id" bson:"_id"`
+	Description string `json:"description" bson:"description"`
+	Store       Store  `json:"store" bson:"store"`
 }
