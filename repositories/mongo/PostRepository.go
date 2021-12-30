@@ -1,6 +1,7 @@
 package mongo
 
 import (
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang-clean-arch/configurations"
@@ -40,6 +41,9 @@ func (p postRepository) GetAll() (response []entities.Post) {
 func (p postRepository) Create(post entities.Post) {
 	ctx, cancel := configurations.NewMongoContext()
 	defer cancel()
+
+	fmt.Println("repo")
+	fmt.Println(post)
 
 	_, err := p.Collection.InsertOne(ctx, post)
 
