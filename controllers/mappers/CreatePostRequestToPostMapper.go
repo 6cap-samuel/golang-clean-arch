@@ -7,15 +7,6 @@ import (
 )
 
 func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities.Post {
-	var ratings []entities.Rating
-
-	for _, item := range request.Ratings {
-		ratings = append(ratings, entities.Rating{
-			Id:    configurations.NewIdentity(),
-			Name:  item.Name,
-			Value: item.Value,
-		})
-	}
 
 	return &entities.Post{
 		Id:          configurations.NewIdentity(),
@@ -28,6 +19,6 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities
 			Lat:      request.StoreLat,
 			Long:     request.StoreLong,
 		},
-		Ratings: ratings,
+		Rating: request.Rating,
 	}
 }
