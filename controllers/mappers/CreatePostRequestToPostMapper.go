@@ -19,6 +19,7 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities
 			Lat:      request.StoreLat,
 			Long:     request.StoreLong,
 		},
-		Rating: request.Rating,
+		Rating:   request.Rating,
+		HashTags: request.HashTags,
 	}
 }
