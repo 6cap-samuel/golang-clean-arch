@@ -4,10 +4,10 @@ import (
 	"golang-clean-arch/configurations"
 	"golang-clean-arch/controllers/requests"
 	"golang-clean-arch/entities"
+	"time"
 )
 
 func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities.Post {
-
 	return &entities.Post{
 		Id:          configurations.NewIdentity(),
 		Description: request.Description,
@@ -19,7 +19,8 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities
 			Lat:      request.StoreLat,
 			Long:     request.StoreLong,
 		},
-		Rating:   request.Rating,
-		HashTags: request.HashTags,
+		Rating:      request.Rating,
+		HashTags:    request.HashTags,
+		DateCreated: time.Now(),
 	}
 }
