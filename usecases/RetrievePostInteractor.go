@@ -7,7 +7,7 @@ import (
 )
 
 type retrievePostInput struct {
-	postDataSoruce out.PostDataSource
+	postDataSource out.PostDataSource
 }
 
 func NewRetrievePostInteractor(
@@ -19,5 +19,5 @@ func NewRetrievePostInteractor(
 }
 
 func (r *retrievePostInput) GetAll() (response []entities.Post) {
-	return r.postDataSoruce.GetAll()
+	return r.postDataSource.GetAll()
 }

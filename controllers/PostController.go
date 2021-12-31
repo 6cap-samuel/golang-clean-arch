@@ -32,11 +32,11 @@ func (controller *PostController) Route(app *fiber.App) {
 func (controller *PostController) Create(c *fiber.Ctx) error {
 	var request requests.CreatePostRequest
 	err := c.BodyParser(&request)
-	var storeEntity = mappers.CreatePostRequestToPostMapper(request)
+	var storeEntity, hashtags = mappers.CreatePostRequestToPostMapper(request)
 
 	exceptions.PanicIfNeeded(err)
 
-	controller.create.Create(*storeEntity)
+	controller.create.Create(*storeEntity, hashtags)
 	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",

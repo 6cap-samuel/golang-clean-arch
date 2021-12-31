@@ -7,7 +7,16 @@ import (
 	"time"
 )
 
-func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities.Post {
+func CreatePostRequestToPostMapper(request requests.CreatePostRequest) (*entities.Post, []entities.Hashtag) {
+	var hashtags []entities.Hashtag
+
+	for _, hashtag := range request.HashTags {
+		hashtags = append(hashtags, entities.Hashtag{
+			Id:    configurations.NewIdentity(),
+			Name:  hashtag,
+			Count: 1,
+		})
+	}
 	return &entities.Post{
 		Id:          configurations.NewIdentity(),
 		Description: request.Description,
@@ -22,5 +31,5 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities
 		Rating:      request.Rating,
 		HashTags:    request.HashTags,
 		DateCreated: time.Now(),
-	}
+	}, hashtags
 }

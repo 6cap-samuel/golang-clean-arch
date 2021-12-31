@@ -17,13 +17,24 @@ func main() {
 	database := configurations.NewMongoDatabase(configuration)
 
 	postRepository := mongo.NewPostRepository(database)
+	hashtagRepository := mongo.NewHashtagRepository(database)
 
 	retrievePost := usecases.NewRetrievePostInteractor(&postRepository)
-	createPost := usecases.NewCreatePostInput(&postRepository)
+	createPost := usecases.NewCreatePostInput(
+		&postRepository,
+		&hashtagRepository,
+	)
+	retrieveHashtag := usecases.NewRetrieveHashtagInteractor(
+		&hashtagRepository,
+	)
 
 	postController := controllers.NewPostController(
 		&retrievePost,
 		&createPost,
+	)
+
+	hashtagController := controllers.NewHashtagController(
+		&retrieveHashtag,
 	)
 
 	app := fiber.New(configurations.NewFiberConfig())
@@ -37,6 +48,7 @@ func main() {
 
 	// Setup Routing
 	postController.Route(app)
+	hashtagController.Route(app)
 
 	port := os.Getenv("PORT")
 	//port := "8081"
