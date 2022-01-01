@@ -68,6 +68,7 @@ func (p postRepository) GetAllWith(
 				},
 			},
 		},
+		findOptions,
 	)
 
 	exceptions.PanicIfNeeded(err)
