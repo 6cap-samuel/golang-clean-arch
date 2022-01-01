@@ -51,7 +51,6 @@ func main() {
 	hashtagController.Route(app)
 
 	port := os.Getenv("PORT")
-	//port := "8081"
 	err := app.Listen("0.0.0.0:" + port)
 
 	exceptions.PanicIfNeeded(err)
