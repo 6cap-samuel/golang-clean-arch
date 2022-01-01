@@ -34,7 +34,6 @@ func main() {
 		&createPost,
 		&updatePost,
 	)
-
 	hashtagController := controllers.NewHashtagController(
 		&retrieveHashtag,
 	)

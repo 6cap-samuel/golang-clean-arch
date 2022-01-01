@@ -20,7 +20,9 @@ func NewPostRepository(database *mongo.Database) out.PostDataSource {
 	}
 }
 
-func (p postRepository) GetAll() (response []entities.Post) {
+func (p postRepository) GetAll() (
+	response []entities.Post,
+) {
 	ctx, cancel := configurations.NewMongoContext()
 	defer cancel()
 
@@ -28,6 +30,46 @@ func (p postRepository) GetAll() (response []entities.Post) {
 	findOptions.SetSort(bson.D{{"date_created", -1}})
 
 	cursor, err := p.Collection.Find(ctx, bson.M{}, findOptions)
+	exceptions.PanicIfNeeded(err)
+
+	for cursor.Next(ctx) {
+		var post entities.Post
+
+		err := cursor.Decode(&post)
+		exceptions.PanicIfNeeded(err)
+
+		response = append(response, post)
+	}
+	return response
+}
+
+func (p postRepository) GetAllWith(
+	filters []string,
+) (response []entities.Post) {
+	ctx, cancel := configurations.NewMongoContext()
+	defer cancel()
+
+	findOptions := options.Find()
+	findOptions.SetSort(bson.D{{"date_created", -1}})
+
+	var bsonMap bson.A
+	for _, item := range filters {
+		bsonMap = append(bsonMap, item)
+	}
+
+	cursor, err := p.Collection.Find(
+		ctx,
+		bson.D{
+			{"hash_tags",
+				bson.D{
+					{"$in",
+						bsonMap,
+					},
+				},
+			},
+		},
+	)
+
 	exceptions.PanicIfNeeded(err)
 
 	for cursor.Next(ctx) {
@@ -50,7 +92,10 @@ func (p postRepository) Create(post entities.Post) {
 	exceptions.PanicIfNeeded(err)
 }
 
-func (p postRepository) UpdateFood(postId string, food []entities.Food) {
+func (p postRepository) UpdateFood(
+	postId string,
+	food []entities.Food,
+) {
 	ctx, cancel := configurations.NewMongoContext()
 	defer cancel()
 

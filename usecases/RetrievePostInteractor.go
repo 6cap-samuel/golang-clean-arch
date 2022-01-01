@@ -18,6 +18,10 @@ func NewRetrievePostInteractor(
 	}
 }
 
-func (r *retrievePostInput) GetAll() (response []entities.Post) {
-	return r.postDataSource.GetAll()
+func (r *retrievePostInput) GetAll(filters []string) (response []entities.Post) {
+	if len(filters) == 0 {
+		return r.postDataSource.GetAll()
+	} else {
+		return r.postDataSource.GetAllWith(filters)
+	}
 }

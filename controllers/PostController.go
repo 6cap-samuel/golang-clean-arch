@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/gofiber/fiber/v2"
 	"golang-clean-arch/controllers/mappers"
 	"golang-clean-arch/controllers/requests"
@@ -49,7 +50,14 @@ func (controller *PostController) Create(c *fiber.Ctx) error {
 }
 
 func (controller *PostController) List(c *fiber.Ctx) error {
-	result := controller.retrieve.GetAll()
+	var filters []string
+
+	if c.Get("filters") != "" {
+		err := json.Unmarshal([]byte(c.Get("filters")), &filters)
+		exceptions.PanicIfNeeded(err)
+	}
+
+	result := controller.retrieve.GetAll(filters)
 	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",
