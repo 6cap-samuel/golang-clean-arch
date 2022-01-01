@@ -25,6 +25,6 @@ func (c *createPostInput) Create(
 	post entities.Post,
 	hashtags []entities.Hashtag,
 ) {
-	c.postDataSource.Create(post)
-	c.hashtagDataSource.Create(hashtags)
+	go c.postDataSource.Create(post)
+	go c.hashtagDataSource.Create(hashtags)
 }
