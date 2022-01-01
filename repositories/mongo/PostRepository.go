@@ -62,7 +62,7 @@ func (p postRepository) GetAllWith(
 		bson.D{
 			{"hash_tags",
 				bson.D{
-					{"$in",
+					{"$all",
 						bsonMap,
 					},
 				},
