@@ -24,6 +24,7 @@ func main() {
 		&postRepository,
 		&hashtagRepository,
 	)
+	updatePost := usecases.NewUpdatePostIntractor(&postRepository)
 	retrieveHashtag := usecases.NewRetrieveHashtagInteractor(
 		&hashtagRepository,
 	)
@@ -31,6 +32,7 @@ func main() {
 	postController := controllers.NewPostController(
 		&retrievePost,
 		&createPost,
+		&updatePost,
 	)
 
 	hashtagController := controllers.NewHashtagController(

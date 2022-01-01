@@ -11,4 +11,5 @@ type Post struct {
 	Rating      int8      `json:"rating" bson:"rating"`
 	HashTags    []string  `json:"hash_tags" bson:"hash_tags"`
 	DateCreated time.Time `json:"date_created" bson:"date_created"`
+	Foods       []Food    `json:"foods" bson:"foods"`
 }

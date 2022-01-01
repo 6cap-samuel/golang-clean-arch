@@ -49,3 +49,24 @@ func (p postRepository) Create(post entities.Post) {
 
 	exceptions.PanicIfNeeded(err)
 }
+
+func (p postRepository) UpdateFood(postId string, food []entities.Food) {
+	ctx, cancel := configurations.NewMongoContext()
+	defer cancel()
+
+	_, err := p.Collection.UpdateOne(
+		ctx,
+		bson.D{
+			{"_id", postId},
+		},
+		bson.D{
+			{"$set",
+				bson.D{
+					{"foods", food},
+				},
+			},
+		},
+	)
+
+	exceptions.PanicIfNeeded(err)
+}
