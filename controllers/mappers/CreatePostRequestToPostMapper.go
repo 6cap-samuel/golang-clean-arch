@@ -20,6 +20,9 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) (*entitie
 	return &entities.Post{
 		Id:          configurations.NewIdentity(),
 		Description: request.Description,
+		Positives:   request.Positives,
+		Neutrals:    request.Neutrals,
+		Negatives:   request.Negatives,
 		Store: entities.Store{
 			Id:       configurations.NewIdentity(),
 			Name:     request.StoreName,
