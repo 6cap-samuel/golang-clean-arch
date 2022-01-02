@@ -39,6 +39,7 @@ func (h hashtagRepository) Create(hashtags []entities.Hashtag) {
 			for _, cur := range hashtags {
 				if hashtag.Name == cur.Name {
 					isFound = true
+					break
 				}
 			}
 			if !isFound {
