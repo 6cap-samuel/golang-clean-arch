@@ -116,3 +116,22 @@ func (p postRepository) UpdateFood(
 
 	exceptions.PanicIfNeeded(err)
 }
+
+func (p postRepository) Get(
+	postId string,
+) (response entities.Post) {
+	ctx, cancel := configurations.NewMongoContext()
+	defer cancel()
+
+	err := p.Collection.FindOne(
+		ctx,
+		bson.D{
+			{"_id",
+				postId,
+			},
+		},
+	).Decode(&response)
+	exceptions.PanicIfNeeded(err)
+
+	return response
+}

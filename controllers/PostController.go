@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"golang-clean-arch/controllers/mappers"
 	"golang-clean-arch/controllers/requests"
@@ -14,23 +15,27 @@ type PostController struct {
 	retrieve in.RetrievePostsInput
 	create   in.CreatePostInput
 	update   in.UpdatePostInput
+	details  in.RetrievePostDetailsInput
 }
 
 func NewPostController(
 	retrieve *in.RetrievePostsInput,
 	create *in.CreatePostInput,
 	update *in.UpdatePostInput,
+	details *in.RetrievePostDetailsInput,
 ) PostController {
 	return PostController{
 		*retrieve,
 		*create,
 		*update,
+		*details,
 	}
 }
 
 func (controller *PostController) Route(app *fiber.App) {
 	app.Post("/post", controller.Create)
 	app.Get("/post", controller.List)
+	app.Get("/post/:postId", controller.Detail)
 	app.Put("/post/:postId/food", controller.UpdateFood)
 }
 
@@ -58,6 +63,16 @@ func (controller *PostController) List(c *fiber.Ctx) error {
 	}
 
 	result := controller.retrieve.GetAll(filters)
+	return c.JSON(responses.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   result,
+	})
+}
+
+func (controller *PostController) Detail(c *fiber.Ctx) error {
+	fmt.Println("postId")
+	result := controller.details.Get(c.Params("postId"))
 	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",

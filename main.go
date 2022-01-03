@@ -28,11 +28,15 @@ func main() {
 	retrieveHashtag := usecases.NewRetrieveHashtagInteractor(
 		&hashtagRepository,
 	)
+	detailsPost := usecases.NewRetrievePostDetailsInteractor(
+		&postRepository,
+	)
 
 	postController := controllers.NewPostController(
 		&retrievePost,
 		&createPost,
 		&updatePost,
+		&detailsPost,
 	)
 	hashtagController := controllers.NewHashtagController(
 		&retrieveHashtag,
@@ -43,7 +47,7 @@ func main() {
 
 	app.Use(cors.New())
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:8080, https://henhaochi.io",
+		AllowOrigins: os.Getenv("CORS"),
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
