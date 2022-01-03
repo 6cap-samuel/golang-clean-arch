@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"golang-clean-arch/controllers/mappers"
 	"golang-clean-arch/controllers/requests"
@@ -71,8 +70,8 @@ func (controller *PostController) List(c *fiber.Ctx) error {
 }
 
 func (controller *PostController) Detail(c *fiber.Ctx) error {
-	fmt.Println("postId")
 	result := controller.details.Get(c.Params("postId"))
+
 	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",

@@ -131,6 +131,7 @@ func (p postRepository) Get(
 			},
 		},
 	).Decode(&response)
+
 	exceptions.PanicIfNeeded(err)
 
 	return response
