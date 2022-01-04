@@ -1,6 +1,7 @@
 package exceptions
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
 	"golang-clean-arch/controllers/responses"
@@ -8,6 +9,7 @@ import (
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {
 	_, ok := err.(bsoncore.ValidationError)
+	fmt.Println(err)
 	if ok {
 		return ctx.Status(400).JSON(responses.WebResponse{
 			Code:   400,

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"golang-clean-arch/configurations"
 	"golang-clean-arch/controllers"
@@ -49,6 +50,13 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: os.Getenv("CORS"),
 		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
+	app.Use(logger.New())
+	app.Use(logger.New(logger.Config{
+		Format:     "[${ip}]:${port} ${status} - ${method} ${path}\n",
+		TimeFormat: "02-Jan-2006",
+		TimeZone:   "Singapore",
 	}))
 
 	// Setup Routing
