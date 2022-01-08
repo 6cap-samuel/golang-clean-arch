@@ -19,6 +19,7 @@ func main() {
 
 	postRepository := mongo.NewPostRepository(database)
 	hashtagRepository := mongo.NewHashtagRepository(database)
+	featureRepository := mongo.NewFeatureRepository(database)
 
 	retrievePost := usecases.NewRetrievePostInteractor(&postRepository)
 	createPost := usecases.NewCreatePostInput(
@@ -32,6 +33,9 @@ func main() {
 	detailsPost := usecases.NewRetrievePostDetailsInteractor(
 		&postRepository,
 	)
+	getAllFeature := usecases.NewGetAllFeatureDataInteractor(
+		&featureRepository,
+	)
 
 	postController := controllers.NewPostController(
 		&retrievePost,
@@ -41,6 +45,9 @@ func main() {
 	)
 	hashtagController := controllers.NewHashtagController(
 		&retrieveHashtag,
+	)
+	featureController := controllers.NewFeatureController(
+		&getAllFeature,
 	)
 
 	app := fiber.New(configurations.NewFiberConfig())
@@ -62,6 +69,7 @@ func main() {
 	// Setup Routing
 	postController.Route(app)
 	hashtagController.Route(app)
+	featureController.Route(app)
 
 	port := os.Getenv("PORT")
 	err := app.Listen("0.0.0.0:" + port)
