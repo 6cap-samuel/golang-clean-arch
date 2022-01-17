@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -15,15 +16,18 @@ import (
 )
 
 func main() {
+	fmt.Println("Setting up datasource")
 	configuration := configurations.New()
 	database := configurations.NewMongoDatabase(configuration)
 	firebaseAuth := configurations.NewFirebaseAuth()
 
+	fmt.Println("Setting up repositories")
 	postRepository := mongo.NewPostRepository(database)
 	hashtagRepository := mongo.NewHashtagRepository(database)
 	featureRepository := mongo.NewFeatureRepository(database)
 	firebaseClient := client.NewFirebaseClient(firebaseAuth)
 
+	fmt.Println("Setting up use cases")
 	retrievePost := usecases.NewRetrievePostInteractor(&postRepository)
 	createPost := usecases.NewCreatePostInput(
 		&postRepository,
@@ -41,6 +45,7 @@ func main() {
 	)
 	getGoogleSsoLink := usecases.NewGetGoogleSsoLinkWithEmailInteractor(&firebaseClient)
 
+	fmt.Println("Setting up controllers")
 	postController := controllers.NewPostController(
 		&retrievePost,
 		&createPost,
