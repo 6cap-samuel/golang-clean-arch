@@ -8,6 +8,7 @@ import (
 	"golang-clean-arch/configurations"
 	"golang-clean-arch/controllers"
 	"golang-clean-arch/exceptions"
+	"golang-clean-arch/repositories/client"
 	"golang-clean-arch/repositories/mongo"
 	"golang-clean-arch/usecases"
 	"os"
@@ -16,10 +17,12 @@ import (
 func main() {
 	configuration := configurations.New()
 	database := configurations.NewMongoDatabase(configuration)
+	firebaseAuth := configurations.NewFirebaseAuth()
 
 	postRepository := mongo.NewPostRepository(database)
 	hashtagRepository := mongo.NewHashtagRepository(database)
 	featureRepository := mongo.NewFeatureRepository(database)
+	firebaseClient := client.NewFirebaseClient(firebaseAuth)
 
 	retrievePost := usecases.NewRetrievePostInteractor(&postRepository)
 	createPost := usecases.NewCreatePostInput(
@@ -36,6 +39,7 @@ func main() {
 	getAllFeature := usecases.NewGetAllFeatureDataInteractor(
 		&featureRepository,
 	)
+	getGoogleSsoLink := usecases.NewGetGoogleSsoLinkWithEmailInteractor(&firebaseClient)
 
 	postController := controllers.NewPostController(
 		&retrievePost,
@@ -48,6 +52,9 @@ func main() {
 	)
 	featureController := controllers.NewFeatureController(
 		&getAllFeature,
+	)
+	authController := controllers.NewAuthController(
+		&getGoogleSsoLink,
 	)
 
 	app := fiber.New(configurations.NewFiberConfig())
@@ -70,6 +77,7 @@ func main() {
 	postController.Route(app)
 	hashtagController.Route(app)
 	featureController.Route(app)
+	authController.Route(app)
 
 	port := os.Getenv("PORT")
 	err := app.Listen("0.0.0.0:" + port)
