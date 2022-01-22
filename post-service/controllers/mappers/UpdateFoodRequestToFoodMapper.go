@@ -1,9 +1,9 @@
 package mappers
 
 import (
-	"golang-clean-arch/configurations"
-	"golang-clean-arch/controllers/requests"
-	"golang-clean-arch/entities"
+	"post-service/configurations"
+	"post-service/controllers/requests"
+	"post-service/entities"
 )
 
 func UpdateFoodRequestToFoodMapper(requests requests.UpdateFoodRequest) []entities.Food {

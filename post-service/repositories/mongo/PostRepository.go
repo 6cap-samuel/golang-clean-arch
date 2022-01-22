@@ -4,10 +4,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"golang-clean-arch/configurations"
-	"golang-clean-arch/entities"
-	"golang-clean-arch/exceptions"
-	"golang-clean-arch/usecases/out"
+	"post-service/configurations"
+	"post-service/entities"
+	"post-service/exceptions"
+	"post-service/usecases/out"
 )
 
 type postRepository struct {

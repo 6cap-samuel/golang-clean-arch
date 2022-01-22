@@ -1,9 +1,9 @@
 package usecases
 
 import (
-	"golang-clean-arch/entities"
-	"golang-clean-arch/usecases/in"
-	"golang-clean-arch/usecases/out"
+	"post-service/entities"
+	"post-service/usecases/in"
+	"post-service/usecases/out"
 )
 
 type updatePostInput struct {

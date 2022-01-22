@@ -1,7 +1,7 @@
 package in
 
-import "golang-clean-arch/entities"
+import "post-service/entities"
 
 type CreatePostInput interface {
-	Create(post entities.Post, hashtags []entities.Hashtag)
+	Create(post entities.Post)
 }

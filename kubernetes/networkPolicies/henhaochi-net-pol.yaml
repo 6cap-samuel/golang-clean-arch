@@ -28,5 +28,11 @@ spec:
             name: feature-service-entry
             port:
               number: 30003
-      
+      - path: /post
+        pathType: Prefix
+        backend:
+          service:
+            name: post-service-entry
+            port:
+              number: 30004
   

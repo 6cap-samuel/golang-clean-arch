@@ -1,22 +1,13 @@
 package mappers
 
 import (
-	"golang-clean-arch/configurations"
-	"golang-clean-arch/controllers/requests"
-	"golang-clean-arch/entities"
+	"post-service/configurations"
+	"post-service/controllers/requests"
+	"post-service/entities"
 	"time"
 )
 
-func CreatePostRequestToPostMapper(request requests.CreatePostRequest) (*entities.Post, []entities.Hashtag) {
-	var hashtags []entities.Hashtag
-
-	for _, hashtag := range request.HashTags {
-		hashtags = append(hashtags, entities.Hashtag{
-			Id:    configurations.NewIdentity(),
-			Name:  hashtag,
-			Count: 1,
-		})
-	}
+func CreatePostRequestToPostMapper(request requests.CreatePostRequest) *entities.Post {
 	return &entities.Post{
 		Id:          configurations.NewIdentity(),
 		Description: request.Description,
@@ -34,5 +25,5 @@ func CreatePostRequestToPostMapper(request requests.CreatePostRequest) (*entitie
 		Rating:      request.Rating,
 		HashTags:    request.HashTags,
 		DateCreated: time.Now(),
-	}, hashtags
+	}
 }

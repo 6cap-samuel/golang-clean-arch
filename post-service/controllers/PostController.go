@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"golang-clean-arch/controllers/mappers"
-	"golang-clean-arch/controllers/requests"
-	"golang-clean-arch/controllers/responses"
-	"golang-clean-arch/exceptions"
-	"golang-clean-arch/usecases/in"
+	"post-service/controllers/mappers"
+	"post-service/controllers/requests"
+	"post-service/controllers/responses"
+	"post-service/exceptions"
+	"post-service/usecases/in"
 )
 
 type PostController struct {
@@ -32,6 +33,7 @@ func NewPostController(
 }
 
 func (controller *PostController) Route(app *fiber.App) {
+	fmt.Println("Routing all post routes")
 	app.Post("/post", controller.Create)
 	app.Get("/post", controller.List)
 	app.Get("/post/:postId", controller.Detail)
@@ -41,11 +43,11 @@ func (controller *PostController) Route(app *fiber.App) {
 func (controller *PostController) Create(c *fiber.Ctx) error {
 	var request requests.CreatePostRequest
 	err := c.BodyParser(&request)
-	var storeEntity, hashtags = mappers.CreatePostRequestToPostMapper(request)
+	var storeEntity = mappers.CreatePostRequestToPostMapper(request)
 
 	exceptions.PanicIfNeeded(err)
 
-	controller.create.Create(*storeEntity, hashtags)
+	controller.create.Create(*storeEntity)
 	return c.JSON(responses.WebResponse{
 		Code:   200,
 		Status: "OK",

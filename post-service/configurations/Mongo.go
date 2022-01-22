@@ -4,26 +4,27 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"golang-clean-arch/exceptions"
+	"os"
+	"post-service/exceptions"
 	"strconv"
 	"time"
 )
 
-func NewMongoDatabase(configuration Config) *mongo.Database {
+func NewMongoDatabase() *mongo.Database {
 	ctx, cancel := NewMongoContext()
 	defer cancel()
 
-	mongoPoolMin, err := strconv.Atoi(configuration.Get("MONGO_POOL_MIN"))
+	mongoPoolMin, err := strconv.Atoi(os.Getenv("MONGO_POOL_MIN"))
 	exceptions.PanicIfNeeded(err)
 
-	mongoPoolMax, err := strconv.Atoi(configuration.Get("MONGO_POOL_MAX"))
+	mongoPoolMax, err := strconv.Atoi(os.Getenv("MONGO_POOL_MAX"))
 	exceptions.PanicIfNeeded(err)
 
-	mongoMaxIdleTime, err := strconv.Atoi(configuration.Get("MONGO_MAX_IDLE_TIME_SECOND"))
+	mongoMaxIdleTime, err := strconv.Atoi(os.Getenv("MONGO_MAX_IDLE_TIME_SECOND"))
 	exceptions.PanicIfNeeded(err)
 
 	option := options.Client().
-		ApplyURI(configuration.Get("MONGO_URI")).
+		ApplyURI(os.Getenv("MONGO_URI")).
 		SetMinPoolSize(uint64(mongoPoolMin)).
 		SetMaxPoolSize(uint64(mongoPoolMax)).
 		SetMaxConnIdleTime(time.Duration(mongoMaxIdleTime) * time.Second)
@@ -34,7 +35,7 @@ func NewMongoDatabase(configuration Config) *mongo.Database {
 	err = client.Connect(ctx)
 	exceptions.PanicIfNeeded(err)
 
-	database := client.Database(configuration.Get("MONGO_DATABASE"))
+	database := client.Database(os.Getenv("MONGO_DATABASE"))
 	return database
 }
 

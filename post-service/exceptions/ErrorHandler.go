@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
-	"golang-clean-arch/controllers/responses"
+	"post-service/controllers/responses"
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {

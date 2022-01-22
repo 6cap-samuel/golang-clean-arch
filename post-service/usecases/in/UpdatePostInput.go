@@ -1,6 +1,6 @@
 package in
 
-import "golang-clean-arch/entities"
+import "post-service/entities"
 
 type UpdatePostInput interface {
 	UpdateFood(postId string, food []entities.Food)

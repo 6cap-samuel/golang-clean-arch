@@ -1,6 +1,6 @@
 package in
 
-import "golang-clean-arch/entities"
+import "post-service/entities"
 
 type RetrievePostDetailsInput interface {
 	Get(postId string) (response entities.Post)

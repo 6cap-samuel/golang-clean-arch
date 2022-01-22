@@ -1,6 +1,6 @@
 package out
 
-import "golang-clean-arch/entities"
+import "post-service/entities"
 
 type PostDataSource interface {
 	Get(postId string) (response entities.Post)
