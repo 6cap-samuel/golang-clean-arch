@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  SERVER_PORT: "8081"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: server-config
