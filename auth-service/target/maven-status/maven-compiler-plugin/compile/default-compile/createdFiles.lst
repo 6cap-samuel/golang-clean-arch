@@ -3,7 +3,7 @@ sam/henhaochi/authservice/usecases/LoginAccountInteractor.class
 sam/henhaochi/authservice/usecases/out/AccountDataSource.class
 sam/henhaochi/authservice/repositories/mappers/AccountEntityMapper.class
 sam/henhaochi/authservice/AuthServiceApplication.class
-sam/henhaochi/authservice/controllers/RegisterController.class
+sam/henhaochi/authservice/controllers/AccountController.class
 sam/henhaochi/authservice/controllers/requests/LoginRequest.class
 sam/henhaochi/authservice/usecases/in/LoginAccountInput.class
 sam/henhaochi/authservice/repositories/entities/AccountEntity.class
@@ -15,8 +15,8 @@ sam/henhaochi/authservice/repositories/entities/AccountEntity$AccountEntityBuild
 sam/henhaochi/authservice/usecases/in/RegisterAccountInput.class
 sam/henhaochi/authservice/entities/Account.class
 sam/henhaochi/authservice/controllers/mappers/RegisterAccountRequestMapper.class
+sam/henhaochi/authservice/controllers/AuthController.class
 sam/henhaochi/authservice/repositories/AccountRepositoryAdapter.class
 sam/henhaochi/authservice/controllers/requests/RegisterAccountRequest.class
-sam/henhaochi/authservice/controllers/LoginController.class
 sam/henhaochi/authservice/repositories/AccountRepository.class
 sam/henhaochi/authservice/usecases/RegisterAccountInteractor.class

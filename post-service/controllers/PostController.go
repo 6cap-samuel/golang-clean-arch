@@ -2,13 +2,13 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/gofiber/fiber/v2"
 	"post-service/controllers/mappers"
 	"post-service/controllers/requests"
 	"post-service/controllers/responses"
 	"post-service/exceptions"
 	"post-service/usecases/in"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 type PostController struct {
@@ -33,11 +33,10 @@ func NewPostController(
 }
 
 func (controller *PostController) Route(app *fiber.App) {
-	fmt.Println("Routing all post routes")
-	app.Post("/post", controller.Create)
-	app.Get("/post", controller.List)
-	app.Get("/post/:postId", controller.Detail)
-	app.Put("/post/:postId/food", controller.UpdateFood)
+	app.Post("/posts", controller.Create)
+	app.Get("/posts", controller.List)
+	app.Get("/posts/:postId", controller.Detail)
+	app.Put("/posts/:postId/food", controller.UpdateFood)
 }
 
 func (controller *PostController) Create(c *fiber.Ctx) error {

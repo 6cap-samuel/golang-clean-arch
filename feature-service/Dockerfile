@@ -2,7 +2,7 @@
 
 ## We specify the base image we need for our
 ## go application
-FROM golang
+FROM --platform=linux/x86_64 golang:alpine3.15
 ## We create an /app directory within our
 ## image that will hold our application source
 ## files

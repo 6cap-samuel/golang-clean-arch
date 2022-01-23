@@ -5,6 +5,7 @@ metadata:
   labels:
     app: db-service
   name: db-service
+  namespace: ingress-nginx
 spec:
   ports:
   - port: 8080

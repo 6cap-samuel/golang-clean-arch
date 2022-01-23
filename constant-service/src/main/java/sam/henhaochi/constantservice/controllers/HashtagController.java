@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/hashtag")
+@RequestMapping("/hashtags")
 public class HashtagController {
 
     final HashtagStructureMapper mapper;
@@ -27,7 +27,7 @@ public class HashtagController {
 
     @GetMapping
     public ResponseEntity<RetrieveHashtagsResponse> get(){
-        logger.info("GET: /hashtag called");
+        logger.info("GET: /hashtags called");
         List<HashtagResponse> responses = retrieve.get()
                 .stream()
                 .map(mapper::map)
