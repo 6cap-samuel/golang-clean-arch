@@ -54,3 +54,10 @@ spec:
             name: post-service
             port:
               number: 80
+      - path: /meetings
+        pathType: Prefix
+        backend:
+          service:
+            name: meeting-service
+            port:
+              number: 80

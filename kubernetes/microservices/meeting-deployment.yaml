@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: meeting-deployment
+  name: meeting-deployment
+  namespace: ingress-nginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: meeting-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: meeting-deployment
+        db: mongo
+    spec:
+      containers:
+      - image: samueltyr/meeting-service:latest
+        name: meeting-deployment
+        ports:
+        - containerPort: 8081
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-db-secret
+              key: DB_CONNECTION_STRING
+        - name: CORS
+          valueFrom: 
+            configMapKeyRef:
+              name: mongo-config
+              key: CORS
+        - name: MONGO_DATABASE
+          valueFrom: 
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_DATABASE
+        - name: MONGO_MAX_IDLE_TIME_SECOND
+          valueFrom: 
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_MAX_IDLE_TIME_SECOND
+        - name: MONGO_POOL_MAX
+          valueFrom: 
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_POOL_MAX
+        - name: MONGO_POOL_MIN
+          valueFrom: 
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_POOL_MIN
+        - name: PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: server-config
+              key: SERVER_PORT
+        resources: {}
+status: {}
