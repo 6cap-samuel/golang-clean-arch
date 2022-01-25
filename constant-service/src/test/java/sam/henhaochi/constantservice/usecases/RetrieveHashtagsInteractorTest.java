@@ -27,6 +27,9 @@ class RetrieveHashtagsInteractorTest {
 
     @Test
     public void shouldCallHashtagDataSource(){
-        assertEquals(hashtagsInteractor.get(), results);
+        assertEquals(
+                results,
+                hashtagsInteractor.get()
+        );
     }
 }

@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface HashtagDataSource {
     List<Hashtag> retrieveAll();
-    void updateCount(List<String> hashtags);
 }

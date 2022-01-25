@@ -17,8 +17,17 @@ public class HashtagTest {
                 .count(COUNT)
                 .build();
 
-        assertEquals(result.getId(), ID);
-        assertEquals(result.getName(), NAME);
-        assertEquals(result.getCount(), COUNT);
+        assertEquals(
+                ID,
+                result.getId()
+        );
+        assertEquals(
+                NAME,
+                result.getName()
+        );
+        assertEquals(
+                COUNT,
+                result.getCount()
+        );
     }
 }

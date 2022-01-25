@@ -19,7 +19,7 @@ public class HashtagEntity {
     private int count;
 
     public int incrementCount(){
-        return count++;
+        return ++count;
     }
 }
 

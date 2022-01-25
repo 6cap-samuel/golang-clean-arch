@@ -43,10 +43,12 @@ func main() {
 	app := fiber.New(configurations.NewFiberConfig())
 	app.Use(recover.New())
 
-	app.Use(cors.New())
+	fmt.Println("Loading CORS to allow from", os.Getenv("CORS"))
+	fmt.Println("Allowing CORS to from", "*")
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: os.Getenv("CORS"),
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowHeaders: "*",
+		AllowMethods: "GET, POST, PUT, OPTIONS",
 	}))
 
 	app.Use(logger.New())
