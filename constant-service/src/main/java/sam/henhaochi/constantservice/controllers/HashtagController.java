@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sam.henhaochi.constantservice.annotations.methods.WithCorsProtection;
 import sam.henhaochi.constantservice.controllers.mappers.HashtagStructureMapper;
 import sam.henhaochi.constantservice.controllers.responses.RetrieveHashtagsResponse;
 import sam.henhaochi.constantservice.controllers.structure.HashtagResponse;
@@ -26,6 +27,7 @@ public class HashtagController {
     private static final Logger logger = LoggerFactory.getLogger(HashtagController.class);
 
     @GetMapping
+    @WithCorsProtection
     public ResponseEntity<RetrieveHashtagsResponse> get(){
         logger.info("GET: /hashtags called");
         List<HashtagResponse> responses = retrieve.get()

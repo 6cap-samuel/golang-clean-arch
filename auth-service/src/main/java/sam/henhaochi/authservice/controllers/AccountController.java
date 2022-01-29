@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sam.henhaochi.authservice.annotations.methods.WithCorsProtection;
 import sam.henhaochi.authservice.constants.AccountCreationStatus;
 import sam.henhaochi.authservice.controllers.mappers.RegisterAccountRequestMapper;
 import sam.henhaochi.authservice.controllers.requests.RegisterAccountRequest;
@@ -29,6 +30,7 @@ public class AccountController {
     private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @PostMapping("/register")
+    @WithCorsProtection
     public ResponseEntity<Object> register(
             @RequestBody RegisterAccountRequest request
     ) throws NoSuchAlgorithmException, URISyntaxException {

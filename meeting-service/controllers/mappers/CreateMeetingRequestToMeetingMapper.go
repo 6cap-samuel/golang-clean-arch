@@ -7,6 +7,16 @@ import (
 )
 
 func CreatePostRequestToPostMapper(request requests.CreateMeetingRequest) *entities.Meeting {
+	var participants []entities.Participant
+
+	for _, participant := range request.Participants {
+		participants = append(participants, entities.Participant{
+			Id:              configurations.NewIdentity(),
+			Name:            participant,
+			IsParticipating: false,
+		})
+	}
+
 	return &entities.Meeting{
 		Id: configurations.NewIdentity(),
 		Store: entities.Store{
@@ -19,5 +29,6 @@ func CreatePostRequestToPostMapper(request requests.CreateMeetingRequest) *entit
 		},
 		MenusImageUrl:   request.StoreMenuImages,
 		MeetingDateTime: request.MeetingDateTime,
+		Participants:    participants,
 	}
 }

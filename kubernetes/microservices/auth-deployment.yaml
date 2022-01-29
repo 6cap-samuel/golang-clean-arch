@@ -45,5 +45,65 @@ spec:
             configMapKeyRef:
               name: server-config
               key: SERVER_PORT
+        - name: CORS
+          valueFrom: 
+            configMapKeyRef:
+              name: server-config
+              key: CORS
+        resources: {}
+status: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: auth-deployment
+    db: sql
+  name: auth-deployment
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: auth-deployment
+    spec:
+      containers:
+      - image: samueltyr/auth-service:latest
+        name: auth-deployment
+        ports:
+        - containerPort: 8081
+        env:
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: sql-db-secret
+              key: DB_URL
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sql-db-secret
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sql-db-secret
+              key: DB_PASSWORD
+        - name: SERVER_PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: server-config
+              key: SERVER_PORT
+        - name: CORS
+          valueFrom: 
+            configMapKeyRef:
+              name: server-config
+              key: CORS
         resources: {}
 status: {}

@@ -1,4 +1,5 @@
 alias k=kubectl
+k apply -f certManager
 k apply -f configs
 k apply -f secrets
 k apply -f services/db

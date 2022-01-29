@@ -11,5 +11,6 @@ type CreateMeetingRequest struct {
 	StoreLat        float32   `json:"store_lat"`
 	StoreLong       float32   `json:"store_long"`
 	StoreMenuImages []string  `json:"store_meeting_images"`
-	MeetingDateTime time.Time `json:"meeting_date_time" bson:"meeting_date_time"`
+	MeetingDateTime time.Time `json:"meeting_date_time"`
+	Participants    []string  `json:"participants"`
 }
