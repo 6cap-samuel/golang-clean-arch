@@ -75,7 +75,7 @@ spec:
         app: auth-deployment
     spec:
       containers:
-      - image: samueltyr/auth-service:latest
+      - image: samueltyr/auth-service:0.0.1
         name: auth-deployment
         ports:
         - containerPort: 8081
