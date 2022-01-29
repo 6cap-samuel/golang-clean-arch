@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "user.config.cors.url",
+      "type": "java.lang.String",
+      "description": "To enable Cross Origin to specific sources."
+    }
+  ]
+}

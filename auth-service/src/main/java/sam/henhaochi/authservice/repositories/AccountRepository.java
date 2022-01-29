@@ -17,6 +17,10 @@ public interface AccountRepository
             "and a.password = ?2 " +
             "or upper(a.username) = upper(?3) " +
             "and a.password = ?2")
-    Optional<AccountEntity> login(String email, String password, String username);
+    Optional<AccountEntity> login(
+            String email,
+            String password,
+            String username
+    );
 
 }
