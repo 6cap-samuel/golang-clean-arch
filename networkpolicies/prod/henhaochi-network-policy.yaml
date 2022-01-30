@@ -1,0 +1,108 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-auth-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: auth-service.prod.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-constant-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: constant-service.prod.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-feature-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: feature-service.prod.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-post-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: post-service.prod.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: prod-meeting-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: meeting-service.prod.svc.cluster.local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller
+  namespace: ingress-nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT,GET,POST,OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://henhaochi.io"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Origin, Content-Type, Accept, filters"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+      - api.henhaochi.io
+      secretName: echo-tls
+  rules:
+  - host: api.henhaochi.io
+    http:
+      paths:
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-auth-service
+            port:
+              number: 80
+      - path: /accounts
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-auth-service
+            port:
+              number: 80
+      - path: /hashtags
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-constant-service
+            port:
+              number: 80
+      - path: /features
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-feature-service
+            port:
+              number: 80
+      - path: /posts
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-post-service
+            port:
+              number: 80
+      - path: /meetings
+        pathType: Prefix
+        backend:
+          service:
+            name: prod-meeting-service
+            port:
+              number: 80

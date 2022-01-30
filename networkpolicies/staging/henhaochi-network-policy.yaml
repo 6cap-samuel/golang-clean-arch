@@ -1,0 +1,108 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: staging-auth-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: auth-service.staging.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: staging-constant-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: constant-service.staging.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: staging-feature-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: feature-service.staging.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: staging-post-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: post-service.staging.svc.cluster.local
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: staging-meeting-service
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: meeting-service.staging.svc.cluster.local
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-controller-staging
+  namespace: ingress-nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT,GET,POST,OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "http://localhost:3000"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Origin, Content-Type, Accept, filters"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  tls:
+    - hosts:
+      - dev.henhaochi.io
+      secretName: echo-tls-staging
+  rules:
+  - host: dev.henhaochi.io
+    http:
+      paths:
+      - path: /auth
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-auth-service
+            port:
+              number: 80
+      - path: /accounts
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-auth-service
+            port:
+              number: 80
+      - path: /hashtags
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-constant-service
+            port:
+              number: 80
+      - path: /features
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-feature-service
+            port:
+              number: 80
+      - path: /posts
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-post-service
+            port:
+              number: 80
+      - path: /meetings
+        pathType: Prefix
+        backend:
+          service:
+            name: staging-meeting-service
+            port:
+              number: 80
