@@ -1,6 +1,7 @@
 apiVersion: v1
 data:
   MONGO_DATABASE: "golang"
+  MONGO_HENHAOMEET_DATABASE: "henhaomeet"
   MONGO_MAX_IDLE_TIME_SECOND: "60"
   MONGO_POOL_MAX: "100"
   MONGO_POOL_MIN: "10"

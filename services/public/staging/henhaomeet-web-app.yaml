@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: meeting-app-deployment
+  name: henhaomeet-webapp-service
+  namespace: staging
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8081
+  selector:
+    app: meeting-app-deployment
+  type: ClusterIP
+status:
+  loadBalancer: {}

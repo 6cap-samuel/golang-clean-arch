@@ -4,6 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: meeting-deployment
+    db: mongo
   name: meeting-deployment
   namespace: prod
 spec:
@@ -20,45 +21,30 @@ spec:
         db: mongo
     spec:
       containers:
-      - image: samueltyr/meeting-service:0.0.1
+      - image: samueltyr/meeting-service:0.0.10
         name: meeting-deployment
         ports:
         - containerPort: 8081
         env:
-        - name: MONGO_URI
+        - name: DB_CONNECTION_STRING
           valueFrom:
             secretKeyRef:
               name: mongo-db-secret
               key: DB_CONNECTION_STRING
+        - name: SERVER_PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: server-config
+              key: SERVER_PORT
         - name: CORS
           valueFrom: 
             configMapKeyRef:
               name: server-config
               key: CORS
-        - name: MONGO_DATABASE
-          valueFrom: 
+        - name: DB_NAME
+          valueFrom:
             configMapKeyRef:
               name: mongo-config
-              key: MONGO_DATABASE
-        - name: MONGO_MAX_IDLE_TIME_SECOND
-          valueFrom: 
-            configMapKeyRef:
-              name: mongo-config
-              key: MONGO_MAX_IDLE_TIME_SECOND
-        - name: MONGO_POOL_MAX
-          valueFrom: 
-            configMapKeyRef:
-              name: mongo-config
-              key: MONGO_POOL_MAX
-        - name: MONGO_POOL_MIN
-          valueFrom: 
-            configMapKeyRef:
-              name: mongo-config
-              key: MONGO_POOL_MIN
-        - name: PORT
-          valueFrom: 
-            configMapKeyRef:
-              name: server-config
-              key: SERVER_PORT
+              key: MONGO_HENHAOMEET_DATABASE
         resources: {}
 status: {}

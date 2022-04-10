@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: meeting-app-deployment
+  name: meeting-app-deployment
+  namespace: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meeting-app-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: meeting-app-deployment
+    spec:
+      containers:
+      - image: samueltyr/henhaomeet:0.0.1
+        name: meeting-app-deployment
+        ports:
+        - containerPort: 8081
+        resources: {}
+status: {}
